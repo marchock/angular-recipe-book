@@ -21,9 +21,12 @@ export class RecipeService {
 
   constructor() { }
 
-  getRecipe() {
-      console.log(this.recipes);
+  getRecipes() {
       return this.recipes;
+  }
+
+  getRecipe(id: number) {
+      return this.recipes[id];
   }
 
 }
