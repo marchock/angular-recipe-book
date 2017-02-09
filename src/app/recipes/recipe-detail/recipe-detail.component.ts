@@ -1,25 +1,25 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
+import { Router, ActivatedRoute } from "@angular/router";
+import { Subscription } from "rxjs/Rx";
 
-import {Recipe} from '../recipe';
-import {ShoppingListService} from '../../shopping-list/shopping-list.service';
-import {RecipeService} from '../recipe.service';
+import { Recipe } from "../recipe";
+import { ShoppingListService } from "../../shopping-list";
+import { RecipeService } from "../recipe.service";
 
 @Component({
+
   selector: 'rb-recipe-detail',
-  templateUrl: './recipe-detail.component.html'
+  templateUrl: 'recipe-detail.component.html'
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
-
-  subscription: Subscription;
-  recipeIndex: number;
   selectedRecipe: Recipe;
+  private recipeIndex: number;
+  private subscription: Subscription;
 
   constructor(private sls: ShoppingListService,
-              private route: ActivatedRoute,
               private router: Router,
-              private recipesService: RecipeService) { }
+              private route: ActivatedRoute,
+              private recipesService: RecipeService) {}
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe(
@@ -30,14 +30,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     );
   }
 
-  onAddToShoppingList() {
-      this.sls.addItems(this.selectedRecipe.ingredients);
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
   onEdit() {
     this.router.navigate(['/recipes', this.recipeIndex, 'edit']);
   }
@@ -45,6 +37,14 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   onDelete() {
     this.recipesService.deleteRecipe(this.selectedRecipe);
     this.router.navigate(['/recipes']);
+  }
+
+  onAddToShoppingList() {
+    this.sls.addItems(this.selectedRecipe.ingredients);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

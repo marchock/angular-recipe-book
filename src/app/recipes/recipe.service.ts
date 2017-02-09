@@ -1,36 +1,39 @@
 import { Injectable } from '@angular/core';
-import { Recipe } from './recipe';
-import { Ingredient } from '../shared/ingredient';
+
+import { Recipe } from "./recipe";
+import { Ingredient } from "../shared";
 
 @Injectable()
 export class RecipeService {
 
-    private recipes: Recipe[] = [
-        new Recipe(
-            'Dummy',
-            'Dummy',
-            'http://orig15.deviantart.net/a235/f/2010/181/c/e/test_crash_dummy_by_thelittlereaper.jpg',
-            [new Ingredient('French fries', 2), new Ingredient('Pork Meat', 4)]
-        ),
-        new Recipe(
-            'Burger',
-            'Burger beef',
-            'http://ichef.bbci.co.uk/news/660/cpsprodpb/1325A/production/_88762487_junk_food.jpg',
-            [])
-    ];
+  private recipes: Recipe[] = [
+    new Recipe('Schnitzel', 'Very tasty', 'http://images.derberater.de/files/imagecache/456xXXX_berater/berater/slides/WienerSchnitzel.jpg', [
+      new Ingredient('French Fries', 2),
+      new Ingredient('Pork Meat', 1)
+    ]),
+    new Recipe('Summer Salad', 'Okayish', 'http://ohmyveggies.com/wp-content/uploads/2013/06/the_perfect_summer_salad.jpg', [])
+  ];
 
-  constructor() { }
+  constructor() {}
 
   getRecipes() {
-      return this.recipes;
+    return this.recipes;
   }
 
   getRecipe(id: number) {
-      return this.recipes[id];
+    return this.recipes[id];
   }
-
 
   deleteRecipe(recipe: Recipe) {
-      this.recipes.splice(this.recipes.indexOf(recipe), 1);
+    this.recipes.splice(this.recipes.indexOf(recipe), 1);
   }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+  }
+
+  editRecipe(oldRecipe: Recipe, newRecipe: Recipe) {
+    this.recipes[this.recipes.indexOf(oldRecipe)] = newRecipe;
+  }
+
 }
